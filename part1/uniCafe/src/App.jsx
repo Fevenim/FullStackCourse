@@ -24,6 +24,15 @@ const Stats = (props) => {
 
   console.log('props value is', props)
   const { text, value } = props
+
+  if (text == "positive"){
+    return(
+      <div>
+        {text} {value} %
+      </div>
+    )
+  }
+
   return (
     <div>
       {text} {value}
@@ -35,19 +44,23 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const [total, setTotal] = useState(0)
+  const [average, setAverage] = useState(0)
 
   const increaseByOneGood = () => {
 
     const updatedGood = good + 1
     setGood(updatedGood)
+    setTotal(total + 1)
+    setAverage(average + 1)
     console.log('good stats is', updatedGood)
-    //setTotal(updatedLeft + right) 
   }
 
   const increaseByOneNeutral = () => {
 
     const updatedNeutral = neutral + 1
     setNeutral(updatedNeutral)
+    setTotal(total + 1)
     console.log('neutral stats is', updatedNeutral)
   }
 
@@ -55,7 +68,16 @@ const App = () => {
 
     const updatedBad = bad + 1
     setBad(updatedBad)
+    setTotal(total + 1)
+    setAverage(average - 1)
     console.log('bad stats is', updatedBad)
+  }
+
+  const checkState = () => {
+    if (good || neutral || bad == 0){
+      "No feedback given"
+    }
+    
   }
 
   return (
@@ -68,6 +90,9 @@ const App = () => {
       <Stats text={"good"} value={good}/>
       <Stats text={"neutral"} value={neutral}/>
       <Stats text={"bad"} value={bad}/>
+      <Stats text={"all"} value={total}/>
+      <Stats text={"average"} value={average/total}/>
+      <Stats text={"positive"} value={Number(good/total*100).toFixed(1)}/>
     </div>
   )
 }
