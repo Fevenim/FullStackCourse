@@ -1,35 +1,141 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const Header = (props) => {
+  console.log(props)
+  return (
+    <div>
+      <h2>{props.title_text}</h2>
+    </div>
+  )
+}
+
+const Button = (props) => { 
+
+  console.log('props value is', props)
+  const { handleClick, text } = props
+  return (
+    <button onClick={handleClick}>
+      {text}
+    </button>
+  )
+}
+
+const Stats = (props) => { 
+
+  console.log('props value is', props)
+  const { text, value } = props
+  return (
+    <div>
+      {text} {value}
+    </div>
+  )
+}
+
+const App = () => {
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
+  const increaseByOneGood = () => {
+
+    const updatedGood = good + 1
+    setGood(updatedGood)
+    console.log('good stats is', updatedGood)
+    //setTotal(updatedLeft + right) 
+  }
+
+  const increaseByOneNeutral = () => {
+
+    const updatedNeutral = neutral + 1
+    setNeutral(updatedNeutral)
+    console.log('neutral stats is', updatedNeutral)
+  }
+
+  const increaseByOneBad = () => {
+
+    const updatedBad = bad + 1
+    setBad(updatedBad)
+    console.log('bad stats is', updatedBad)
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <Header title_text={"give feedback"} />
+      <Button handleClick={increaseByOneGood} text='good' />
+      <Button handleClick={increaseByOneNeutral} text='neutral' />
+      <Button handleClick={increaseByOneBad} text='bad' />
+      <Header title_text={"statistics"} />
+      <Stats text={"good"} value={good}/>
+      <Stats text={"neutral"} value={neutral}/>
+      <Stats text={"bad"} value={bad}/>
+    </div>
   )
 }
 
 export default App
+
+
+
+
+/* import { useState } from 'react'
+
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing the buttons
+      </div>
+    )
+  }
+  return (
+    <div>
+      button press history: {props.allClicks.join(' ')}
+    </div>
+  )
+}
+
+const Button = (props) => { 
+
+  console.log('props value is', props)
+  const { handleClick, text } = props
+  return (
+    <button onClick={handleClick}>
+      {text}
+    </button>
+  )
+}
+
+const App = () => {
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
+
+  const [total, setTotal] = useState(0)
+
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'))
+    const updatedLeft = left + 1
+    setLeft(updatedLeft)
+    setTotal(updatedLeft + right) 
+  }
+
+  const handleRightClick = () => {
+    setAll(allClicks.concat('R'))
+    setRight(right + 1)
+
+    setTotal(left + right)
+  }
+
+  return (
+    <div>
+      {left}
+      <Button handleClick={handleLeftClick} text='left' />
+      <Button handleClick={handleRightClick} text='right' />
+      {right}
+      <History allClicks={allClicks} />
+    </div>
+  )
+}
+
+export default App
+ */
