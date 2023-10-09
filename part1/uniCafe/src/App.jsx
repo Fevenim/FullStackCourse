@@ -20,10 +20,19 @@ const Button = (props) => {
   )
 }
 
-const Stats = (props) => { 
+const StatisticLine = (props) => { 
 
   console.log('props value is', props)
   const { text, value } = props
+
+  if (text == "positive"){
+    return(
+      <div>
+        {text} {value} %
+      </div>
+    )
+  }
+
   return (
     <div>
       {text} {value}
@@ -31,23 +40,52 @@ const Stats = (props) => {
   )
 }
 
+const Statistics = (props) => {
+  
+  console.log('props value is', props)
+  const { good, neutral, bad, total, average} = props
+  
+  if (total == 0){
+    return(
+      <div>
+        No feedback given
+      </div>
+    )
+  }
+  
+  return(
+  <div>
+    <StatisticLine text={"good"} value={good}/>
+    <StatisticLine text={"neutral"} value={neutral}/>
+    <StatisticLine text={"bad"} value={bad}/>
+    <StatisticLine text={"all"} value={total}/>
+    <StatisticLine text={"average"} value={average/total}/>
+    <StatisticLine text={"positive"} value={Number(good/total*100).toFixed(1)}/>
+  </div>)
+
+}
+
 const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const [total, setTotal] = useState(0)
+  const [average, setAverage] = useState(0)
 
   const increaseByOneGood = () => {
 
     const updatedGood = good + 1
     setGood(updatedGood)
+    setTotal(total + 1)
+    setAverage(average + 1)
     console.log('good stats is', updatedGood)
-    //setTotal(updatedLeft + right) 
   }
 
   const increaseByOneNeutral = () => {
 
     const updatedNeutral = neutral + 1
     setNeutral(updatedNeutral)
+    setTotal(total + 1)
     console.log('neutral stats is', updatedNeutral)
   }
 
@@ -55,6 +93,8 @@ const App = () => {
 
     const updatedBad = bad + 1
     setBad(updatedBad)
+    setTotal(total + 1)
+    setAverage(average - 1)
     console.log('bad stats is', updatedBad)
   }
 
@@ -65,77 +105,9 @@ const App = () => {
       <Button handleClick={increaseByOneNeutral} text='neutral' />
       <Button handleClick={increaseByOneBad} text='bad' />
       <Header title_text={"statistics"} />
-      <Stats text={"good"} value={good}/>
-      <Stats text={"neutral"} value={neutral}/>
-      <Stats text={"bad"} value={bad}/>
+      <Statistics good={good} neutral={neutral} bad={bad} total={total} average={average} />
     </div>
   )
 }
 
 export default App
-
-
-
-
-/* import { useState } from 'react'
-
-const History = (props) => {
-  if (props.allClicks.length === 0) {
-    return (
-      <div>
-        the app is used by pressing the buttons
-      </div>
-    )
-  }
-  return (
-    <div>
-      button press history: {props.allClicks.join(' ')}
-    </div>
-  )
-}
-
-const Button = (props) => { 
-
-  console.log('props value is', props)
-  const { handleClick, text } = props
-  return (
-    <button onClick={handleClick}>
-      {text}
-    </button>
-  )
-}
-
-const App = () => {
-  const [left, setLeft] = useState(0)
-  const [right, setRight] = useState(0)
-  const [allClicks, setAll] = useState([])
-
-  const [total, setTotal] = useState(0)
-
-  const handleLeftClick = () => {
-    setAll(allClicks.concat('L'))
-    const updatedLeft = left + 1
-    setLeft(updatedLeft)
-    setTotal(updatedLeft + right) 
-  }
-
-  const handleRightClick = () => {
-    setAll(allClicks.concat('R'))
-    setRight(right + 1)
-
-    setTotal(left + right)
-  }
-
-  return (
-    <div>
-      {left}
-      <Button handleClick={handleLeftClick} text='left' />
-      <Button handleClick={handleRightClick} text='right' />
-      {right}
-      <History allClicks={allClicks} />
-    </div>
-  )
-}
-
-export default App
- */
