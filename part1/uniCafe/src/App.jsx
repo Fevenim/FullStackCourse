@@ -20,7 +20,7 @@ const Button = (props) => {
   )
 }
 
-const Stats = (props) => { 
+const StatisticLine = (props) => { 
 
   console.log('props value is', props)
   const { text, value } = props
@@ -40,7 +40,7 @@ const Stats = (props) => {
   )
 }
 
-const DisplayStats = (props) => {
+const Statistics = (props) => {
   
   console.log('props value is', props)
   const { good, neutral, bad, total, average} = props
@@ -55,12 +55,12 @@ const DisplayStats = (props) => {
   
   return(
   <div>
-    <Stats text={"good"} value={good}/>
-    <Stats text={"neutral"} value={neutral}/>
-    <Stats text={"bad"} value={bad}/>
-    <Stats text={"all"} value={total}/>
-    <Stats text={"average"} value={average/total}/>
-    <Stats text={"positive"} value={Number(good/total*100).toFixed(1)}/>
+    <StatisticLine text={"good"} value={good}/>
+    <StatisticLine text={"neutral"} value={neutral}/>
+    <StatisticLine text={"bad"} value={bad}/>
+    <StatisticLine text={"all"} value={total}/>
+    <StatisticLine text={"average"} value={average/total}/>
+    <StatisticLine text={"positive"} value={Number(good/total*100).toFixed(1)}/>
   </div>)
 
 }
@@ -105,7 +105,7 @@ const App = () => {
       <Button handleClick={increaseByOneNeutral} text='neutral' />
       <Button handleClick={increaseByOneBad} text='bad' />
       <Header title_text={"statistics"} />
-      <DisplayStats good={good} neutral={neutral} bad={bad} total={total} average={average} />
+      <Statistics good={good} neutral={neutral} bad={bad} total={total} average={average} />
     </div>
   )
 }
