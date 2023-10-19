@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
-const Header = (props) => {
+const Anecdote = (props) => {
   console.log(props)
   return (
     <div>
-      <h2>{props.title_text}</h2>
+      <p>{props.anecdote_text}</p>
     </div>
   )
 }
@@ -20,55 +20,6 @@ const Button = (props) => {
   )
 }
 
-const StatisticLine = (props) => { 
-
-  console.log('props value is', props)
-  const { text, value } = props
-
-  if (text == "positive"){
-    return(
-      <tr>
-        <td>{text}</td>
-        <td>{value} %</td>
-      </tr>
-    )
-  }
-
-  return (
-    <tr>
-      <td>{text}</td>
-      <td>{value}</td>
-    </tr>
-  )
-}
-
-const Statistics = (props) => {
-  
-  console.log('props value is', props)
-  const { good, neutral, bad, total, average} = props
-  
-  if (total == 0){
-    return(
-      <div>
-        No feedback given
-      </div>
-    )
-  }
-  
-  return(
-  <table>
-    <tbody>
-    <StatisticLine text={"good"} value={good}/>
-    <StatisticLine text={"neutral"} value={neutral}/>
-    <StatisticLine text={"bad"} value={bad}/>
-    <StatisticLine text={"all"} value={total}/>
-    <StatisticLine text={"average"} value={average/total}/>
-    <StatisticLine text={"positive"} value={Number(good/total*100).toFixed(1)}/>
-    </tbody>
-  </table>)
-
-}
-
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -82,16 +33,16 @@ const App = () => {
   ]
   const [selected, setSelected] = useState(0)
 
-  const forwardSelect = () => {
-    const updatedSelected = selected + 1
+  const randomSelect = () => {
+    const updatedSelected = Math.floor(Math.random() * 8);
     setSelected(updatedSelected)
-    console.log('current count is', updatedSelected)
+    console.log('current selection number is', updatedSelected)
   }
 
   return (
     <div>
-      {anecdotes[selected]}
-      <Button handleClick={forwardSelect} text='next anecdote' />
+      <Anecdote anecdote_text={anecdotes[selected]} />
+      <Button handleClick={randomSelect} text='next anecdote' />
     </div>
   )
 }
