@@ -27,16 +27,18 @@ const StatisticLine = (props) => {
 
   if (text == "positive"){
     return(
-      <div>
-        {text} {value} %
-      </div>
+      <tr>
+        <td>{text}</td>
+        <td>{value} %</td>
+      </tr>
     )
   }
 
   return (
-    <div>
-      {text} {value}
-    </div>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   )
 }
 
@@ -54,14 +56,16 @@ const Statistics = (props) => {
   }
   
   return(
-  <div>
+  <table>
+    <tbody>
     <StatisticLine text={"good"} value={good}/>
     <StatisticLine text={"neutral"} value={neutral}/>
     <StatisticLine text={"bad"} value={bad}/>
     <StatisticLine text={"all"} value={total}/>
     <StatisticLine text={"average"} value={average/total}/>
     <StatisticLine text={"positive"} value={Number(good/total*100).toFixed(1)}/>
-  </div>)
+    </tbody>
+  </table>)
 
 }
 
