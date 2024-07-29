@@ -3,6 +3,7 @@ import axios from 'axios'
 import Filter from './components/Filter'
 import Person from './components/Person'
 import PersonForm from './components/PersonForm'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -11,19 +12,16 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }, [])
 
   const addName = (event) => {
     event.preventDefault()
 
-    // Check if the name already exists in the phonebook
     if (persons.some(person => person.name === newName)){
       alert(`${newName} is already added to phonebook.`)
       return
@@ -38,6 +36,14 @@ const App = () => {
     setPersons(persons.concat(nameObject))
     setNewName('')
     setNewNumber('')
+
+    personService
+    .create(nameObject)
+    .then(response => {
+      setPersons(persons.concat(response))
+      setnewName('')
+      setNewNumber('')
+    })
   }
 
   const handleNameChange = (event) => {
